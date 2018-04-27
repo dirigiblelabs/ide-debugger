@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="debugger">
 <head>
 	<meta charset="utf-8" />
 	
@@ -24,28 +24,40 @@
 	
 	<!-- Twitter Bootstrap with Theme Support -->
 	<link rel="stylesheet" href="/services/v3/core/theme/bootstrap.min.css">
-	<script src="/services/v3/web/resources/bootstrap/3.3.7/bootstrap.min.js"></script>
 	
 	<!-- Custom IDE Styles -->
 	<link type="text/css" rel="stylesheet" href="/services/v3/core/theme/ide.css" />
 	
 	<script src="../../ide/ui/ui-bootstrap-tpls-0.14.3.min.js"></script>
-	
-	<script src="debugger.js"></script>
-	
-
 </head>
 
-<body border="1px" ng-app="debugger" ng-controller="DebuggerController as debugger">
+<body border="1px" ng-controller="DebuggerController">
 
 	<div>
 		<div class="btn-group pull-right" role="group" aria-label="toolbar">
-			<button type="button" class="btn btn-default" title="Refresh" ng-click="debugger.refresh()"><i class="fa fa-refresh"></i></button>
+		<button type="button" class="btn btn-default" title="Enable/Disable" data-toggle="button" aria-pressed="false" autocomplete="off" ng-click="enable()"><i class="fa fa-power-off"></i></button>
+
+			<button type="button" class="btn btn-default" title="Refresh" ng-click="refresh()"><i class="fa fa-refresh"></i></button>
 		</div>
 	</div>
 	
 	<div class="debugger"></div>
+	<table class="table table-dark" ng-cloak>
+		<tbody>
+			<tr ng-repeat="next in sessions">
+				<td>
+				  <blockquote>
+					  <p>Debug Session #{{$index + 1}}</p>
+					  <footer>session - <cite>{{next.sessionId}}</cite></footer>
+					  <footer>execution - <cite>{{next.executionId}}</cite></footer>
+					  <footer>user - <cite>{{next.userId}}</cite></footer>
+					</blockquote>
+				</td>
+			</tr>
+		</tbody>
+	</table>
 
-	
+	<script src="/services/v3/web/resources/bootstrap/3.3.7/bootstrap.min.js"></script>	
+	<script src="debugger.js"></script>
 </body>
 </html>

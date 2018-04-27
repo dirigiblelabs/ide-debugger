@@ -30,18 +30,20 @@ UriBuilder.prototype.build = function(){
 /**
  * Debugger Service API delegate
  */
-var DebuggerService = function($http, debuggerServiceUrl){
+var DebuggerService = function($http, debuggerServiceUrl) {
 	this.debuggerServiceUrl = debuggerServiceUrl;
 	this.$http = $http;
-}
-DebuggerService.prototype.refresh = function(){
+};
+
+DebuggerService.prototype.refresh = function() {
 	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path("sessions").build();
-	return this.$http.post(url)
-			.then(function(response){
-				alert('Sessions: ' + JSON.stringify(response.data));
-				return response.data;
-			});
-}
+	return this.$http.get(url);
+};
+
+DebuggerService.prototype.enable = function() {
+	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path("enable").build();
+	return this.$http.post(url);
+};
 
 angular.module('debugger.config', [])
 	.constant('DEBUGGER_SVC_URL','/services/v3/ide/debug/rhino')
@@ -87,10 +89,15 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 .factory('debuggerService', ['$http', 'DEBUGGER_SVC_URL', function($http, DEBUGGER_SVC_URL){
 	return new DebuggerService($http, DEBUGGER_SVC_URL);
 }])
-.controller('DebuggerController', ['debuggerService', function (debuggerService) {
+.controller('DebuggerController', ['$scope', 'debuggerService', function ($scope, debuggerService) {
 	
-	this.refresh = function(){
-		debuggerService.refresh();
+	$scope.refresh = function() {
+		debuggerService.refresh().then(function(response) {
+			$scope.sessions = response.data;
+		});
 	};
-	
+
+	$scope.enable = function() {
+		
+	};
 }]);
