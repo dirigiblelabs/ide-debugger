@@ -66,6 +66,10 @@ DebuggerService.prototype.stepOver = function() {
 	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path('session').path('stepOver').build();
 	this.$http.get(url).then();
 };
+DebuggerService.prototype.activateSession = function(sessionId) {
+	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path('session').path('activate').path(sessionId).build();
+	this.$http.get(url).then();
+};
 
 angular.module('debugger.config', [])
 	.constant('DEBUGGER_SVC_URL','/services/v3/ide/debug/rhino');
@@ -135,6 +139,7 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 		} else {
 			debuggerService.disable();
 			$messageHub.announceDebugDisabled();
+			$scope.sessions = [];
 		}
 	};
 
@@ -176,6 +181,14 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 			debuggerService.stepOver();
 			$messageHub.announceDebugStepOver();
 			$scope.refresh();
+		}
+	};
+
+	$scope.activateSession = function(session) {
+		if ($scope.debugEnabled) {
+			debuggerService.activateSession(session.sessionId).success(function() {
+				$scope.refresh();
+			});
 		}
 	};
 }]);
