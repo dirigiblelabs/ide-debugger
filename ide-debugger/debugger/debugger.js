@@ -35,10 +35,6 @@ var DebuggerService = function($http, debuggerServiceUrl) {
 	this.debuggerServiceUrl = debuggerServiceUrl;
 	this.$http = $http;
 };
-DebuggerService.prototype.refresh = function() {
-	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path("sessions").build();
-	return this.$http.get(url);
-};
 DebuggerService.prototype.enable = function() {
 	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path("enable").build();
 	this.$http.get(url).then(function() {
@@ -47,7 +43,27 @@ DebuggerService.prototype.enable = function() {
 	});
 };
 DebuggerService.prototype.disable = function() {
-	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path("disable").build();
+	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path('disable').build();
+	this.$http.get(url);
+};
+DebuggerService.prototype.refresh = function() {
+	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path('sessions').build();
+	return this.$http.get(url);
+};
+DebuggerService.prototype.continue = function() {
+	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path('session').path('continue').build();
+	this.$http.get(url).then();
+};
+DebuggerService.prototype.pause = function() {
+	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path('session').path('pause').build();
+	this.$http.get(url).then();
+};
+DebuggerService.prototype.stepInto = function() {
+	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path('session').path('stepInto').build();
+	this.$http.get(url).then();
+};
+DebuggerService.prototype.stepOver = function() {
+	var url = new UriBuilder().path(this.debuggerServiceUrl.split('/')).path('session').path('stepOver').build();
 	this.$http.get(url).then();
 };
 
@@ -100,12 +116,6 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 
 	$scope.debugEnabled = false;
 
-	$scope.refresh = function() {
-		debuggerService.refresh().then(function(response) {
-			$scope.sessions = response.data;
-		});
-	};
-
 	$scope.enable = function() {
 		$scope.debugEnabled = !$scope.debugEnabled;
 		if ($scope.debugEnabled) {
@@ -113,5 +123,39 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 		} else {
 			debuggerService.disable();
 		}
+	};
+
+	$scope.refresh = function() {
+		if ($scope.debugEnabled) {
+			debuggerService.refresh().then(function(response) {
+				$scope.sessions = response.data;
+			});
+		}
+	};
+
+	$scope.continue = function() {
+		if ($scope.debugEnabled) {
+			debuggerService.continue();
+		}
+
+	};
+
+	$scope.pause = function() {
+		if ($scope.debugEnabled) {
+			debuggerService.pause();
+		}
+	};
+
+	$scope.stepInto = function() {
+		if ($scope.debugEnabled) {
+			debuggerService.stepInto();
+		}
+	};
+
+	$scope.stepOver = function() {
+		if ($scope.debugEnabled) {
+			debuggerService.stepOver();
+		}
+
 	};
 }]);
