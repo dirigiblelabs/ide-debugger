@@ -8,4 +8,4 @@ exports.getView = function() {
 			"link":"../ide-debugger/views/debugger/index.html"
 	};
 	return view;
-}
+};
