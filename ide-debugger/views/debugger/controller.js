@@ -88,31 +88,42 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 	var message = function(evtName, data) {
 		messageHub.post({data: data}, 'debugger.' + evtName);
 	};
-	var announceFileSelected = function(fileDescriptor) {
-		this.message('file.selected', fileDescriptor);
+	var announceDebugEnabled = function() {
+		this.message('debug.enabled');
 	};
-	var announceFileCreated = function(fileDescriptor) {
-		this.message('file.created', fileDescriptor);
+	var announceDebugDisabled = function() {
+		this.message('debug.disabled');
 	};
-	var announceFileOpen = function(fileDescriptor) {
-		this.message('file.open', fileDescriptor);
+	var announceDebugRefresh = function() {
+		this.message('debug.refresh');
 	};
-	var announcePull = function(fileDescriptor) {
-		this.message('file.pull', fileDescriptor);
+	var announceDebugContinue = function() {
+		this.message('debug.continue');
 	};
-
+	var announceDebugPause = function() {
+		this.message('debug.pause');
+	};
+	var announceDebugStepInto = function() {
+		this.message('debug.stepInto');
+	};
+	var announceDebugStepOver = function() {
+		this.message('debug.stepOver');
+	};
 	return {
 		message: message,
-		announceFileSelected: announceFileSelected,
-		announceFileCreated: announceFileCreated,
-		announceFileOpen: announceFileOpen,
-		announcePull: announcePull
+		announceDebugEnabled: announceDebugEnabled,
+		announceDebugDisabled: announceDebugDisabled,
+		announceDebugRefresh: announceDebugRefresh,
+		announceDebugContinue: announceDebugContinue,
+		announceDebugPause: announceDebugPause,
+		announceDebugStepInto: announceDebugStepInto,
+		announceDebugStepOver: announceDebugStepOver
 	};
 }])
 .factory('debuggerService', ['$http', 'DEBUGGER_SVC_URL', function($http, DEBUGGER_SVC_URL){
 	return new DebuggerService($http, DEBUGGER_SVC_URL);
 }])
-.controller('DebuggerController', ['$scope', 'debuggerService', function ($scope, debuggerService) {
+.controller('DebuggerController', ['$scope', '$messageHub', 'debuggerService', function ($scope, $messageHub, debuggerService) {
 
 	$scope.debugEnabled = false;
 
@@ -120,8 +131,10 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 		$scope.debugEnabled = !$scope.debugEnabled;
 		if ($scope.debugEnabled) {
 			debuggerService.enable();
+			$messageHub.announceDebugEnabled();
 		} else {
 			debuggerService.disable();
+			$messageHub.announceDebugDisabled();
 		}
 	};
 
@@ -129,6 +142,7 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 		if ($scope.debugEnabled) {
 			debuggerService.refresh().then(function(response) {
 				$scope.sessions = response.data;
+				$messageHub.announceDebugRefresh();
 			});
 		}
 	};
@@ -136,26 +150,32 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 	$scope.continue = function() {
 		if ($scope.debugEnabled) {
 			debuggerService.continue();
+			$messageHub.announceDebugContinue();
+			$scope.refresh();
 		}
-
 	};
 
 	$scope.pause = function() {
 		if ($scope.debugEnabled) {
 			debuggerService.pause();
+			$messageHub.announceDebugPause();
+			$scope.refresh();
 		}
 	};
 
 	$scope.stepInto = function() {
 		if ($scope.debugEnabled) {
 			debuggerService.stepInto();
+			$messageHub.announceDebugStepInto();
+			$scope.refresh();
 		}
 	};
 
 	$scope.stepOver = function() {
 		if ($scope.debugEnabled) {
 			debuggerService.stepOver();
+			$messageHub.announceDebugStepOver();
+			$scope.refresh();
 		}
-
 	};
 }]);
