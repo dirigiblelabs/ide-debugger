@@ -199,7 +199,7 @@ angular.module('debugger', ['debugger.config', 'ngAnimate', 'ngSanitize', 'ui.bo
 		$scope.debugEnabled = !$scope.debugEnabled;
 		if ($scope.debugEnabled) {
 			debuggerService.enable().then(function() {
-				var wsUrl = window.location.protocol === 'https:' ? 'wss' : 'ws' + '://' + window.location.host + '/websockets/v3/ide/debug/sessions';
+				var wsUrl = window.location.protocol === 'https:' ? 'wss' : 'ws' + '://' + window.location.host + '/websockets/v4/ide/debug/sessions';
 				var webSocket = new WebSocket(wsUrl);
 				webSocket.onmessage = function(event) {
 					var data = JSON.parse(event.data);
