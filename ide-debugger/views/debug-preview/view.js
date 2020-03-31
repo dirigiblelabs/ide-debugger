@@ -10,12 +10,12 @@
  */
 exports.getView = function() {
 	var view = {
-			"id":"variables",
-			"name":"Variables",
+			"id":"debug-preview",
+			"name":"Debug Preview",
 			"factory":"frame",
-			"region":"center-top",
-			"label":"Variables",
-			"link":"../ide-debugger/views/variables/index.html"
+			"region":"center-bottom",
+			"label":"Debug Preview",
+			"link":"../ide-debugger/views/debug-preview/index.html"
 	};
 	return view;
 };
