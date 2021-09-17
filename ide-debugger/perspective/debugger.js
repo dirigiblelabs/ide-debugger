@@ -8,12 +8,12 @@
  * Contributors:
  *   SAP - initial API and implementation
  */
-exports.getPerspective = function() {
-	var perspective = {
-			"name":"Debugger",
-			"link":"../ide-debugger/index.html",
-			"order":"106",
-			"image":"bug"
+exports.getPerspective = function () {
+	let perspective = {
+		"name": "Debugger",
+		"link": "../ide-debugger/index.html",
+		"order": "106",
+		"image": "bug"
 	};
 	return perspective;
 }

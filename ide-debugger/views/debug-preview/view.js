@@ -8,14 +8,14 @@
  * Contributors:
  *   SAP - initial API and implementation
  */
-exports.getView = function() {
-	var view = {
-			"id":"debug-preview",
-			"name":"Debug Preview",
-			"factory":"frame",
-			"region":"center-bottom",
-			"label":"Debug Preview",
-			"link":"../ide-debugger/views/debug-preview/index.html"
+exports.getView = function () {
+	let view = {
+		"id": "debug-preview",
+		"name": "Debug Preview",
+		"factory": "frame",
+		"region": "center-bottom",
+		"label": "Debug Preview",
+		"link": "../ide-debugger/views/debug-preview/index.html"
 	};
 	return view;
 };

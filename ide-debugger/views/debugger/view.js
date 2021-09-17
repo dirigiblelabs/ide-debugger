@@ -8,14 +8,14 @@
  * Contributors:
  *   SAP - initial API and implementation
  */
-exports.getView = function() {
-	var view = {
-			"id":"debugger",
-			"name":"Debugger",
-			"factory":"frame",
-			"region":"center-top",
-			"label":"Debugger",
-			"link":"../ide-debugger/views/debugger/index.html"
+exports.getView = function () {
+	let view = {
+		"id": "debugger",
+		"name": "Debugger",
+		"factory": "frame",
+		"region": "center-top",
+		"label": "Debugger",
+		"link": "../ide-debugger/views/debugger/index.html"
 	};
 	return view;
 };
