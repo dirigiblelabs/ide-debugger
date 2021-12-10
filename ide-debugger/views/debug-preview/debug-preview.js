@@ -91,6 +91,4 @@ angular.module('preview', [])
 			}
 		};
 
-	}]).config(function ($sceProvider) {
-		$sceProvider.enabled(false);
-	});
+	}]);

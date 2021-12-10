@@ -9,11 +9,10 @@
  *   SAP - initial API and implementation
  */
 exports.getPerspective = function () {
-	let perspective = {
+	return {
 		"name": "Debugger",
 		"link": "../ide-debugger/index.html",
 		"order": "106",
 		"image": "bug"
 	};
-	return perspective;
 }

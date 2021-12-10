@@ -9,7 +9,7 @@
  *   SAP - initial API and implementation
  */
 exports.getView = function () {
-	let view = {
+	return {
 		"id": "debug-preview",
 		"name": "Debug Preview",
 		"factory": "frame",
@@ -17,5 +17,4 @@ exports.getView = function () {
 		"label": "Debug Preview",
 		"link": "../ide-debugger/views/debug-preview/index.html"
 	};
-	return view;
 };

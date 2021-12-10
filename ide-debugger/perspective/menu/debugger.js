@@ -9,7 +9,7 @@
  *   SAP - initial API and implementation
  */
 exports.getMenu = function () {
-	let menu = {
+	return {
 		"name": "Debugger",
 		"link": "#",
 		"order": "100",
@@ -23,5 +23,4 @@ exports.getMenu = function () {
 			}
 		]
 	};
-	return menu;
 }
