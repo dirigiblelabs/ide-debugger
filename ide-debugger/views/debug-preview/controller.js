@@ -67,8 +67,8 @@ angular.module('preview', [])
 					resourcePath = url.substring(url.indexOf('/graalvm/') + '/graalvm/'.length);
 				} else if (url.indexOf('/js/') > 0) {
 					resourcePath = url.substring(url.indexOf('/js/') + '/js/'.length);
-				} else if (url.indexOf('/xsc/') > 0) {
-					resourcePath = url.substring(url.indexOf('/xsc/') + '/xsc/'.length);
+				} else if (url.indexOf('/xsk/') > 0) {
+					resourcePath = url.substring(url.indexOf('/xsk/') + '/xsk/'.length);
 				}
 				$messageHub.refresh("/" + resourcePath);
 			}
@@ -97,7 +97,7 @@ angular.module('preview', [])
 					url += '/graalvm';
 					break;
 				case 'xsjs':
-					url += '/xsc';
+					url += '/xsk';
 					break;
 				case 'md':
 					url += '/wiki';
